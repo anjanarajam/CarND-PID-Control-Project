@@ -91,8 +91,8 @@ int main() {
           //}
           
           // DEBUG
-          std::cout << "CTE: " << cte << " Steering Value: " << steer_error
-                    << "throttle_error:" << throttle_error << std::endl;
+          std::cout << "CTE: " << cte << " Steering Value: " << steer_value
+                    << "throttle_error:" << throttle_value << std::endl;
 
 
           json msgJson;
@@ -131,8 +131,3 @@ int main() {
   h.run();
 }
 
-
-
-for (int i = 0; i < N; i++) {
-
-}
