@@ -35,10 +35,10 @@ string hasData(string s) {
   return "";
 }
 
-void ResetSimulator(uWS::WebSocket<uWS::SERVER>& ws) {
-	std::string msg("42[\"reset\", {}]");
-	ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
-}
+//void ResetSimulator(uWS::WebSocket<uWS::SERVER>& ws) {
+//	std::string msg("42[\"reset\", {}]");
+//	ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
+//}
 
 int main() {
   uWS::Hub h;
@@ -119,7 +119,7 @@ int main() {
 			/* Twiddle to fine tune the parameters in automation */
 			twiddle.PerformTwiddle(steer_pid);	
 			twiddle.PrintValues();
-			ResetSimulator(ws);
+			//ResetSimulator(ws);
 
 		}// end "telemetry" if
 
