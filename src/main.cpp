@@ -120,7 +120,7 @@ int main() {
 			if (twiddle.reached_count_) {
 				/* Twiddle to fine tune the parameters in automation */
 				twiddle.PerformTwiddle(steer_pid);
-				steer_pid.Init(Kp_, Kd_, Ki_);
+				steer_pid.Init(steer_pid.Kp_, steer_pid.Kd_, steer_pid.Ki_);
 				twiddle.PrintValues();
 				ResetSimulator(ws);
 			}
