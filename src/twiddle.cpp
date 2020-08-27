@@ -99,7 +99,7 @@ void Twiddle::PrintValues() {
 	std::cout << "Iteration: " << iter_
 		<< " best error: " << best_error_
 		<< " curren error: " << average_error_
-		<< " current param: " << param_
+		<< " current param: " << param_index_
 		<< " current state: " << twiddle_state_ << std::endl;
 }
 
