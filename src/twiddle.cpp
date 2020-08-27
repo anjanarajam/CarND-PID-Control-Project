@@ -4,7 +4,7 @@
 
 
 static constexpr int INITIAL_STEPS = 100;
-static constexpr int MAX_STEPS = 200;
+static constexpr int MAX_STEPS = 500;
 
 double Twiddle::CalculateSumDp(int num_params, std::vector<double> dp) {
 	double sum_dp = 0;
@@ -34,8 +34,6 @@ void Twiddle::CalculateAverageError() {
 
 
 void Twiddle::PerformTwiddle(PID &pid_steer) {
-
-	double best_error;
 	param_ = { pid_steer.Kp_, pid_steer.Kd_, pid_steer.Ki_};
 	dp_ = {1, 1, 1};
 	double threshold = 0.00001;	
