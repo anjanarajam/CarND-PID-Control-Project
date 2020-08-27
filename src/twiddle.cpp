@@ -88,7 +88,7 @@ void Twiddle::PerformTwiddle(PID &pid_steer) {
 }
 
 void Twiddle::GetNextParamIndex() {
-	param_index_ = (param_index_ + 1.0) % param_.size();
+	param_index_ = (param_index_ + 1) % param_.size();
 
 	if (!param_index_) {
 		iter_++;

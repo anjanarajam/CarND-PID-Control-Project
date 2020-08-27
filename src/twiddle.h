@@ -15,7 +15,7 @@ private:
 	double average_error_{};
 	double best_error_{};
 	int twiddle_state_{ INIT };
-	double param_index_{ 0 };
+	int param_index_{ 0 };
 	std::vector<double> param_{};
 	std::vector<double> dp_{};
 	long int iter_{ 0 };
