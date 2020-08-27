@@ -1,11 +1,12 @@
 #include <iostream>
 #include <vector>
 #include "twiddle.h"
-#include "PID.h"
+
 
 static constexpr int INITIAL_STEPS = 100;
+static constexpr int MAX_STEPS = 200;
 
-void Twiddle::CalculateSumDp(int num_params, std::vector<double> dp) {
+double Twiddle::CalculateSumDp(int num_params, std::vector<double> dp) {
 	double sum_dp = 0;
 	for (int i = 0; i < num_params; i++) {
 		sum_dp += dp[i];
@@ -15,36 +16,37 @@ void Twiddle::CalculateSumDp(int num_params, std::vector<double> dp) {
 }
 
 void Twiddle::IncrementSteps() {
-	n_steps_++;
+	num_steps_++;
 }
 
 void Twiddle::AccumulateError(double cte) {
-	if (n_steps_ > INITIAL_STEPS) {
+	if (num_steps_ > INITIAL_STEPS) {
 		error_ += cte * cte;
 	}
 }
 
 void Twiddle::CalculateAverageError() {
-	average_error_ = error_ / (n_steps_ - INITIAL_STEPS);
+	if (num_steps_ > MAX_STEPS) {				
+		average_error_ = error_ / (num_steps_ - INITIAL_STEPS);
+		reached_count_ = true;
+	}
 }
 
 
 void Twiddle::PerformTwiddle(PID &pid_steer) {
 
 	double best_error;
-	param_ = { pid_steer.kp_, pid_steer.Kd_, pid_steer.Ki_};
+	param_ = { pid_steer.Kp_, pid_steer.Kd_, pid_steer.Ki_};
 	dp_ = {1, 1, 1};
 	double threshold = 0.00001;	
 	int num_params = 3;
 
-	while (add_dp(num_params, dp) > threshold) {		
-		std::cout << "iterator:" << "best_error:" << iter << best_error;
-
+	while (CalculateSumDp(num_params, dp_) > threshold) {
 		switch (twiddle_state_) {
 		case INIT:
 			/* Set the best error , increment p by dp and set the state to increment */
 			best_error_ = average_error_;
-			param_[param_index_] = += dp_[param_index_];
+			param_[param_index_]  += dp_[param_index_];
 			twiddle_state_ = INCREMENT;
 			break;
 		case INCREMENT:
@@ -53,7 +55,7 @@ void Twiddle::PerformTwiddle(PID &pid_steer) {
 				best_error_ = average_error_;
 				dp_[param_index_] *= 1.1;
 				GetNextParamIndex();
-				param_[param_index_] = += dp_[param_index_];
+				param_[param_index_]  += dp_[param_index_];
 			}
 			/* Else decrement by dp by subtracting twice of dp to p and the state becomes decrement */
 			else {
@@ -69,12 +71,12 @@ void Twiddle::PerformTwiddle(PID &pid_steer) {
 		    /* Else reset p to its original value by adding dp and reduce the value of dp and then increment 
 			in the next index by dp */
 			} else {
-				param_[param_index_] = += dp_[param_index_];
-				dp_[twiddle_param_] *= 0.9;
+				param_[param_index_]  += dp_[param_index_];
+				dp_[param_index_] *= 0.9;
 			}
 
 			GetNextParamIndex();
-			param_[param_index_] = += dp_[param_index_];
+			param_[param_index_] += dp_[param_index_];
 
 			/* Set the state to increment*/
 			twiddle_state_ = DECREMENT;

@@ -116,10 +116,13 @@ int main() {
 			twiddle.IncrementSteps();
 			twiddle.AccumulateError(cte);
 			twiddle.CalculateAverageError();
-			/* Twiddle to fine tune the parameters in automation */
-			twiddle.PerformTwiddle(steer_pid);	
-			twiddle.PrintValues();
-			//ResetSimulator(ws);
+
+			if (twiddle.reached_count_) {
+				/* Twiddle to fine tune the parameters in automation */
+				twiddle.PerformTwiddle(steer_pid);
+				twiddle.PrintValues();
+				//ResetSimulator(ws);
+			}
 
 		}// end "telemetry" if
 
