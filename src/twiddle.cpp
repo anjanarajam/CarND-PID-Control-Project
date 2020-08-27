@@ -27,7 +27,7 @@ void Twiddle::AccumulateError(double cte) {
 
 void Twiddle::CalculateAverageError() {
 	if (num_steps_ > MAX_STEPS) {				
-		average_error_ = static_cast<double>(error_ / (static_cast<long int>(num_steps_ - INITIAL_STEPS)));
+		average_error_ = error_ / static_cast<double>(num_steps_ - static_cast<long int>(INITIAL_STEPS));
 		reached_count_ = true;
 	}
 }
@@ -77,7 +77,7 @@ void Twiddle::PerformTwiddle(PID &pid_steer) {
 			param_[param_index_] += dp_[param_index_];
 
 			/* Set the state to increment*/
-			twiddle_state_ = DECREMENT;
+			twiddle_state_ = INCREMENT;
 			break;
 		default:
 			break;
