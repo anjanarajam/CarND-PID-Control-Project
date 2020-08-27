@@ -5,7 +5,7 @@
 
 static constexpr int INITIAL_STEPS = 100;
 
-void CalculateSumDp(int num_params, std::vector<double> dp) {
+void Twiddle::CalculateSumDp(int num_params, std::vector<double> dp) {
 	double sum_dp = 0;
 	for (int i = 0; i < num_params; i++) {
 		sum_dp += dp[i];
@@ -14,22 +14,22 @@ void CalculateSumDp(int num_params, std::vector<double> dp) {
 	return sum_dp;
 }
 
-void IncrementSteps() {
+void Twiddle::IncrementSteps() {
 	n_steps_++;
 }
 
-void AccumulateError(double cte) {
+void Twiddle::AccumulateError(double cte) {
 	if (n_steps_ > INITIAL_STEPS) {
 		error_ += cte * cte;
 	}
 }
 
-void CalculateAverageError() {
+void Twiddle::CalculateAverageError() {
 	average_error_ = error_ / (n_steps_ - INITIAL_STEPS);
 }
 
 
-void PerformTwiddle(PID &pid_steer) {
+void Twiddle::PerformTwiddle(PID &pid_steer) {
 
 	double best_error;
 	param_ = { pid_steer.kp_, pid_steer.Kd_, pid_steer.Ki_};
@@ -85,7 +85,7 @@ void PerformTwiddle(PID &pid_steer) {
 	}
 }
 
-void GetNextParamIndex() {
+void Twiddle::GetNextParamIndex() {
 	param_index_ = (param_index_ + 1) % param_.size();
 
 	if (!param_index_) {
@@ -93,7 +93,7 @@ void GetNextParamIndex() {
 	}
 }
 
-void PrintValues() {
+void Twiddle::PrintValues() {
 	std::cout << "Iteration: " << iter_
 		<< " best error: " << best_error_
 		<< " curren error: " << average_error_
