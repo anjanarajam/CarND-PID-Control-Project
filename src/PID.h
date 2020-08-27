@@ -31,25 +31,25 @@ class PID {
    */
   double TotalError();
 
+  /**
+ * PID Coefficients
+ */
+  double Kp_;
+  double Ki_;
+  double Kd_;
+
  private:
   /**
    * PID Errors
    */
-  double p_error;
-  double i_error;
-  double d_error;
-
-  /**
-   * PID Coefficients
-   */ 
-  double Kp;
-  double Ki;
-  double Kd;
+  double p_error_;
+  double i_error_;
+  double d_error_;
 
   /**
    * Previous CTE
    */
-  double prev_cte{};
+  double prev_cte_{};
 };
 
 #endif  // PID_H

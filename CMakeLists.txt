@@ -21,6 +21,6 @@ link_directories(/usr/local/Cellar/libuv/1*/lib)
 endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin") 
 
 
-add_executable(pid ${sources})
+add_executable(pid ${sources} "src/twiddle.h")
 
 target_link_libraries(pid z ssl uv uWS)
