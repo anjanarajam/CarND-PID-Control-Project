@@ -10,12 +10,12 @@ class Twiddle {
 private:
 	void GetNextParamIndex();
 
-	int num_steps_{};
+	long int num_steps_{};
 	double error_{};
 	double average_error_{};
 	double best_error_{};
 	int twiddle_state_{ INIT };
-	int param_index_{ 0 };
+	double param_index_{ 0 };
 	std::vector<double> param_{};
 	std::vector<double> dp_{};
 	long int iter_{ 0 };

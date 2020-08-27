@@ -4,14 +4,20 @@
  * TODO: Complete the PID class. You may add any additional desired functions.
  */
 
+/**
+* Constructor
+*/
 PID::PID() {}
 
+/**
+ * Destructor.
+ */
 PID::~PID() {}
 
+/*
+ * Initialize PID coefficients (and errors, if needed)
+ */
 void PID::Init(double Kp, double Ki, double Kd) {
-  /**
-   * TODO: Initialize PID coefficients (and errors, if needed)
-   */
 	Kp_ = Kp;
 	Ki_ = Ki;
 	Kd_ = Kd;
@@ -23,11 +29,11 @@ void PID::Init(double Kp, double Ki, double Kd) {
 	prev_cte_ = 0;
 }
 
+/**
+ * Update PID errors based on cte.
+ */
 void PID::UpdateError(double cte) {
-  /**
-   * TODO: Update PID errors based on cte.
-   */
-	
+
 	/* Proportional error */
 	p_error_ = cte;
 
@@ -39,11 +45,12 @@ void PID::UpdateError(double cte) {
 	i_error_ += cte;	
 }
 
+/*
+ * TODO:Calculate and return the total error
+ */
 double PID::TotalError() {
-  /**
-   * TODO: Calculate and return the total error
-   */
+
 	double total_error = p_error_ * Kp_ + d_error_ * Kd_ + i_error_ * Ki_;
 
-	return total_error;  // TODO: Add your total error calc here!
+	return total_error;  
 }

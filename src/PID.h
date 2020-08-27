@@ -34,17 +34,17 @@ class PID {
   /**
  * PID Coefficients
  */
-  double Kp_;
-  double Ki_;
-  double Kd_;
+  double Kp_{};
+  double Ki_{};
+  double Kd_{};
 
  private:
   /**
    * PID Errors
    */
-  double p_error_;
-  double i_error_;
-  double d_error_;
+  double p_error_{};
+  double i_error_{};
+  double d_error_{};
 
   /**
    * Previous CTE
