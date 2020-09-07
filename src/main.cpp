@@ -35,11 +35,6 @@ string hasData(string s) {
   return "";
 }
 
-void ResetSimulator(uWS::WebSocket<uWS::SERVER>& ws) {
-	std::string msg("42[\"reset\", {}]");
-	ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
-}
-
 int main() {
   uWS::Hub h;
 
@@ -50,7 +45,7 @@ int main() {
 
   /* Initialize the steering and throttle pid variable */
   steer_pid.Init(0.225, 0.0004, 4.0);
-  throttle_pid.Init(0.1, 0.002, 0.0);
+  //throttle_pid.Init(0.1, 0.002, 0.0);
 
   h.onMessage([&steer_pid, &throttle_pid, &twiddle](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length,
 					 uWS::OpCode opCode) {
@@ -79,7 +74,7 @@ int main() {
 			steer_pid.UpdateError(cte);
 
 			/* Find the total error */
-			steer_value -= steer_pid.TotalError();
+			steer_value = -(steer_pid.TotalError());
 
 			if (steer_value < -1) {
 				steer_value = -1;
@@ -120,9 +115,12 @@ int main() {
 			if (twiddle.reached_count_) {
 				/* Twiddle to fine tune the parameters in automation */
 				twiddle.PerformTwiddle(steer_pid);
+
 				steer_pid.Init(steer_pid.Kp_, steer_pid.Kd_, steer_pid.Ki_);
 				twiddle.PrintValues();
-				ResetSimulator(ws);
+
+				std::string msg("42[\"reset\", {}]");
+				ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
 			}
 
 		}// end "telemetry" if
