@@ -116,7 +116,7 @@ int main() {
 				/* Twiddle to fine tune the parameters in automation */
 				twiddle.PerformTwiddle(steer_pid);
 
-				steer_pid.Init(steer_pid.Kp_, steer_pid.Kd_, steer_pid.Ki_);
+				steer_pid.Init(steer_pid.Kp_, steer_pid.Ki_, steer_pid.Kd_);
 				twiddle.PrintValues();
 
 				std::string msg("42[\"reset\", {}]");
