@@ -38,7 +38,7 @@ void PID::UpdateError(double cte) {
 	p_error_ = cte;
 
 	/* Derivative error */
-	d_error_ = prev_cte_ - cte;
+	d_error_ = cte - prev_cte_;
 	prev_cte_ = cte;
 
 	/* Integral error */

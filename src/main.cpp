@@ -66,7 +66,7 @@ int main() {
 			double speed = std::stod(j[1]["speed"].get<string>());
 			double angle = std::stod(j[1]["steering_angle"].get<string>());
 			double steer_value = 0.0;
-			double throttle_value = 0.3;
+			double throttle_value = MAX_THROTTLE;
 
 			/* Calculate steering value here, remember the steering value is [-1, 1] */
 
