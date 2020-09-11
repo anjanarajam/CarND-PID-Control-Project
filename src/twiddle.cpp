@@ -35,7 +35,7 @@ void Twiddle::CalculateAverageError() {
 
 void Twiddle::PerformTwiddle(PID &pid_steer) {
 	param_ = { pid_steer.Kp_, pid_steer.Ki_, pid_steer.Kd_};
-	dp_ = {1, 1, 1};
+	dp_ = { 0.05, 0.001, 0.05 };
 	double threshold = 0.00001;	
 	int num_params = 3;
 
