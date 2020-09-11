@@ -38,14 +38,13 @@ string hasData(string s) {
 int main() {
   uWS::Hub h;
 
-  /* Get two objects for pid controller : one for speed and one for throttle */
+  /* Get object for pid controller for speed */
   PID steer_pid;
-  PID throttle_pid;
+  /* Get object for twiddle algorithm */
   Twiddle twiddle;
 
   /* Initialize the steering and throttle pid variable */
   steer_pid.Init(0.25, 0.001, 3.0);
-  //throttle_pid.Init(0.1, 0.002, 0.0);
 
   h.onMessage([&steer_pid, &throttle_pid, &twiddle](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length,
 					 uWS::OpCode opCode) {
@@ -68,32 +67,19 @@ int main() {
 			double steer_value = 0.0;
 			double throttle_value = MAX_THROTTLE;
 
-			/* Calculate steering value here, remember the steering value is [-1, 1] */
+			/* Calculate steering value here, */
 
 			/* Find the individual P , I and D steering value errors wrt cross track error */
 			steer_pid.UpdateError(cte);
 
-			/* Find the total error */
+			/* Find the total error(steering value). remember the steering value is [-1, 1] */
 			steer_value = -(steer_pid.TotalError());
-
 			if (steer_value < -1) {
 				steer_value = -1;
 			}
 			else if (steer_value > 1) {
 				steer_value = 1;
 			}
-
-			///* Find the individual P , I and D throttle value errors wrt cross track error */
-			//throttle_pid.UpdateError(fabs(cte));
-
-			///* Find the total error */
-			//throttle_value  = 0.75 - throttle_pid.TotalError();
-			//if (throttle_value > 1.0) {
-			//    throttle_value = 1.0;
-			//}
-			//else if (throttle_value < -1.0) {
-			//    throttle_value = -1.0;
-			//}
 
 			/* Print the values */
 			std::cout << "CTE: " << cte << " Steering Value: " << steer_value
@@ -107,7 +93,7 @@ int main() {
 			std::cout << msg << std::endl;
 			ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
 		  
-
+			/* Twiddle for automated tuning of the parameters */
 			twiddle.IncrementSteps();
 			twiddle.AccumulateError(cte);
 			twiddle.CalculateAverageError();

@@ -1,10 +1,6 @@
 #include "PID.h"
 
 /**
- * TODO: Complete the PID class. You may add any additional desired functions.
- */
-
-/**
 * Constructor
 */
 PID::PID() {}
@@ -46,7 +42,7 @@ void PID::UpdateError(double cte) {
 }
 
 /*
- * TODO:Calculate and return the total error
+ * Calculate and return the total error
  */
 double PID::TotalError() {
 
