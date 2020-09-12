@@ -44,7 +44,7 @@ int main() {
   Twiddle twiddle;
 
   /* Initialize the steering and throttle pid variable */
-  steer_pid.Init(0.25, 0.001, 3.0);
+  steer_pid.Init(0.25, 0.002, 3.0);
 
   h.onMessage([&steer_pid, &twiddle](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length,
 					 uWS::OpCode opCode) {
